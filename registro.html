@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crear cuenta · GEONET</title>
+    <meta name="description" content="Registro público de clientes en la plataforma GEONET." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="pantalla-acceso">
+    <svg class="tendido" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="tendido__reticula">
+        <path d="M0 150h1440M0 300h1440M0 450h1440M0 600h1440M0 750h1440" />
+        <path d="M180 0v900M360 0v900M540 0v900M720 0v900M900 0v900M1080 0v900M1260 0v900" />
+      </g>
+
+      <g>
+        <path class="tendido__ruta" d="M-40 190 L180 190 L300 300 L540 300 L660 420 L900 420" />
+        <path class="tendido__ruta" d="M180 190 L180 480 L360 660 L360 940" />
+        <path class="tendido__ruta" d="M1480 250 L1260 250 L1140 370 L900 370 L780 250 L540 250" />
+        <path class="tendido__ruta" d="M1260 250 L1260 560 L1080 740 L1080 940" />
+        <path class="tendido__ruta" d="M-40 700 L300 700 L420 580 L660 580 L780 700 L1180 700" />
+      </g>
+
+      <g>
+        <path class="tendido__pulso" d="M-40 190 L180 190 L300 300 L540 300 L660 420 L900 420" />
+        <path class="tendido__pulso" d="M180 190 L180 480 L360 660 L360 940" />
+        <path class="tendido__pulso" d="M1480 250 L1260 250 L1140 370 L900 370 L780 250 L540 250" />
+        <path class="tendido__pulso" d="M1260 250 L1260 560 L1080 740 L1080 940" />
+        <path class="tendido__pulso" d="M-40 700 L300 700 L420 580 L660 580 L780 700 L1180 700" />
+      </g>
+
+      <g>
+        <circle class="tendido__nodo" cx="180" cy="190" r="6" />
+        <circle class="tendido__nodo" cx="540" cy="300" r="5" />
+        <circle class="tendido__nodo" cx="1260" cy="250" r="6" />
+        <circle class="tendido__nodo" cx="900" cy="370" r="5" />
+        <circle class="tendido__nodo" cx="300" cy="700" r="5" />
+        <circle class="tendido__nodo" cx="780" cy="700" r="5" />
+        <circle class="tendido__aro" cx="180" cy="190" r="6" />
+        <circle class="tendido__aro" cx="1260" cy="250" r="6" />
+        <circle class="tendido__aro" cx="780" cy="700" r="6" />
+      </g>
+    </svg>
+
+    <main class="tarjeta-acceso tarjeta-acceso--ancha">
+      <header class="marca-acceso">
+        <span class="logotipo">
+          <span class="logotipo__marca">
+            <svg class="icono" aria-hidden="true"><use href="#i-marca" /></svg>
+          </span>
+          GEONET
+        </span>
+        <h1 class="marca-acceso__titulo">Crear una cuenta pública</h1>
+        <p class="marca-acceso__lema">
+          Consulta el estado de tu servicio y reporta incidencias
+        </p>
+        <p class="insignia insignia--acento">
+          <svg class="icono icono--sm" aria-hidden="true"><use href="#i-usuario" /></svg>
+          Rol asignado: Público
+        </p>
+      </header>
+
+      <form class="formulario-acceso" id="form-registro-cuenta" novalidate>
+        <div class="rejilla-campos">
+          <p class="campo ancho-total">
+            <label class="campo__etiqueta" for="nombre">Nombre completo</label>
+            <span class="campo__caja">
+              <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-usuario" /></svg>
+              <input
+                class="campo__control"
+                id="nombre"
+                name="nombre"
+                type="text"
+                autocomplete="name"
+                placeholder="Edgar Duno"
+                required
+              />
+            </span>
+            <span class="campo__error"></span>
+          </p>
+
+          <p class="campo ancho-total">
+            <label class="campo__etiqueta" for="correo">Correo electrónico</label>
+            <span class="campo__caja">
+              <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-correo" /></svg>
+              <input
+                class="campo__control"
+                id="correo"
+                name="correo"
+                type="email"
+                autocomplete="email"
+                placeholder="tucorreo@dominio.com"
+                required
+              />
+            </span>
+            <span class="campo__error"></span>
+          </p>
+
+          <p class="campo">
+            <label class="campo__etiqueta" for="clave">Contraseña</label>
+            <span class="campo__caja">
+              <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-candado" /></svg>
+              <input
+                class="campo__control"
+                id="clave"
+                name="clave"
+                type="password"
+                autocomplete="new-password"
+                required
+              />
+              <button type="button" class="campo__ojo" aria-label="Mostrar contraseña">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-ojo" /></svg>
+              </button>
+            </span>
+            <span class="campo__error"></span>
+          </p>
+
+          <p class="campo">
+            <label class="campo__etiqueta" for="confirmacion">Confirmar contraseña</label>
+            <span class="campo__caja">
+              <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-candado" /></svg>
+              <input
+                class="campo__control"
+                id="confirmacion"
+                name="confirmacion"
+                type="password"
+                autocomplete="new-password"
+                data-igual-a="clave"
+                required
+              />
+            </span>
+            <span class="campo__error"></span>
+          </p>
+
+          <p class="campo ancho-total">
+            <label class="campo__etiqueta" for="zona-servicio">Zona del servicio</label>
+            <select class="campo__control" id="zona-servicio" name="zona">
+              <option value="Caracas">Caracas</option>
+              <option value="Carabobo">Carabobo</option>
+              <option value="Aragua">Aragua</option>
+              <option value="Zulia">Zulia</option>
+              <option value="Anzoátegui">Anzoátegui</option>
+              <option value="Bolívar">Bolívar</option>
+            </select>
+          </p>
+        </div>
+
+        <label class="marca">
+          <input type="checkbox" id="terminos" name="terminos" required />
+          Acepto los términos y condiciones del servicio
+        </label>
+        <span class="campo__error" id="terminos-error"></span>
+
+        <button type="submit" class="btn btn--primario btn--bloque">Registrarme</button>
+      </form>
+
+      <footer class="pie-acceso">
+        ¿Ya tienes cuenta?
+        <a href="login.html">Inicia sesión aquí</a>
+      </footer>
+    </main>
+
+    <output class="toasts" aria-live="polite"></output>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

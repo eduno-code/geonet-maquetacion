@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Iniciar sesión · GEONET</title>
+    <meta name="description" content="Acceso a la consola de gestión de red de GEONET." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="pantalla-acceso">
+    <!-- Fondo -->
+    <svg class="tendido" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="tendido__reticula">
+        <path d="M0 150h1440M0 300h1440M0 450h1440M0 600h1440M0 750h1440" />
+        <path d="M180 0v900M360 0v900M540 0v900M720 0v900M900 0v900M1080 0v900M1260 0v900" />
+      </g>
+
+      <g>
+        <path class="tendido__ruta" d="M-40 190 L180 190 L300 300 L540 300 L660 420 L900 420" />
+        <path class="tendido__ruta" d="M180 190 L180 480 L360 660 L360 940" />
+        <path class="tendido__ruta" d="M1480 250 L1260 250 L1140 370 L900 370 L780 250 L540 250" />
+        <path class="tendido__ruta" d="M1260 250 L1260 560 L1080 740 L1080 940" />
+        <path class="tendido__ruta" d="M-40 700 L300 700 L420 580 L660 580 L780 700 L1180 700" />
+      </g>
+
+      <g>
+        <path class="tendido__pulso" d="M-40 190 L180 190 L300 300 L540 300 L660 420 L900 420" />
+        <path class="tendido__pulso" d="M180 190 L180 480 L360 660 L360 940" />
+        <path class="tendido__pulso" d="M1480 250 L1260 250 L1140 370 L900 370 L780 250 L540 250" />
+        <path class="tendido__pulso" d="M1260 250 L1260 560 L1080 740 L1080 940" />
+        <path class="tendido__pulso" d="M-40 700 L300 700 L420 580 L660 580 L780 700 L1180 700" />
+      </g>
+
+      <g>
+        <circle class="tendido__nodo" cx="180" cy="190" r="6" />
+        <circle class="tendido__nodo" cx="540" cy="300" r="5" />
+        <circle class="tendido__nodo" cx="1260" cy="250" r="6" />
+        <circle class="tendido__nodo" cx="900" cy="370" r="5" />
+        <circle class="tendido__nodo" cx="300" cy="700" r="5" />
+        <circle class="tendido__nodo" cx="780" cy="700" r="5" />
+        <circle class="tendido__aro" cx="180" cy="190" r="6" />
+        <circle class="tendido__aro" cx="1260" cy="250" r="6" />
+        <circle class="tendido__aro" cx="780" cy="700" r="6" />
+      </g>
+    </svg>
+
+    <main class="tarjeta-acceso">
+      <header class="marca-acceso">
+        <span class="logotipo">
+          <span class="logotipo__marca">
+            <svg class="icono" aria-hidden="true"><use href="#i-marca" /></svg>
+          </span>
+          GEONET
+        </span>
+        <h1 class="marca-acceso__titulo">Iniciar sesión</h1>
+        <p class="marca-acceso__lema">Consola de gestión de red · Acceso autorizado</p>
+      </header>
+
+      <form class="formulario-acceso" id="form-login" novalidate>
+        <p class="campo">
+          <label class="campo__etiqueta" for="identificador">Usuario o correo</label>
+          <span class="campo__caja">
+            <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-usuario" /></svg>
+            <input
+              class="campo__control"
+              id="identificador"
+              name="identificador"
+              type="text"
+              autocomplete="username"
+              placeholder="eduno"
+              required
+            />
+          </span>
+          <span class="campo__error" id="identificador-error"></span>
+        </p>
+
+        <p class="campo">
+          <label class="campo__etiqueta" for="clave">Contraseña</label>
+          <span class="campo__caja">
+            <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-candado" /></svg>
+            <input
+              class="campo__control"
+              id="clave"
+              name="clave"
+              type="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              required
+            />
+            <button type="button" class="campo__ojo" aria-label="Mostrar contraseña">
+              <svg class="icono icono--sm" aria-hidden="true"><use href="#i-ojo" /></svg>
+            </button>
+          </span>
+          <span class="campo__error" id="clave-error"></span>
+        </p>
+
+        <p class="fila-opciones">
+          <label class="marca">
+            <input type="checkbox" name="recordar" /> Recordar sesión
+          </label>
+          <a class="enlace-apoyo" href="#recuperar">¿Olvidaste tu contraseña?</a>
+        </p>
+
+        <button type="submit" class="btn btn--primario btn--bloque">Ingresar</button>
+      </form>
+
+      <p class="credenciales">
+        <strong>Credenciales de prueba:</strong> usuario <code>eduno</code> ·
+        contraseña <code>geonet2026</code>
+      </p>
+
+      <footer class="pie-acceso">
+        ¿No tienes cuenta?
+        <a href="registro.html">Crear una cuenta pública</a>
+      </footer>
+    </main>
+
+    <output class="toasts" aria-live="polite"></output>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

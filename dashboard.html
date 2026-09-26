@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel · GEONET</title>
+    <meta name="description" content="Panel de control de la red de GEONET: estado de nodos, clientes e incidencias." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body data-vista="panel">
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <div class="app">
+      <aside class="lateral" id="menu-lateral" data-theme="dark">
+        <header class="lateral__cabecera">
+          <span class="logotipo">
+            <span class="logotipo__marca">
+              <svg class="icono" aria-hidden="true"><use href="#i-marca" /></svg>
+            </span>
+            GEONET
+          </span>
+        </header>
+
+        <nav class="lateral__nav" aria-label="Módulos del sistema">
+          <section class="lateral__grupo">
+            <p class="lateral__rotulo" id="grupo-operacion">Operación</p>
+            <ul aria-labelledby="grupo-operacion">
+              <li>
+                <a class="lateral__enlace" href="dashboard.html" aria-current="page">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-panel" /></svg>
+                  Panel
+                </a>
+              </li>
+              <li>
+                <a class="lateral__enlace" href="crud-cards.html">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-nodos" /></svg>
+                  Nodos de red
+                </a>
+              </li>
+              <li>
+                <a class="lateral__enlace" href="crud.html">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-clientes" /></svg>
+                  Usuarios
+                </a>
+              </li>
+            </ul>
+          </section>
+
+
+        </nav>
+      </aside>
+
+      <span class="velo" data-visible="false"></span>
+
+      <div class="area">
+        <header class="superior">
+          <button type="button" class="hamburguesa" aria-expanded="false" aria-controls="menu-lateral" aria-label="Abrir menú">
+            <svg class="icono" aria-hidden="true"><use href="#i-menu" /></svg>
+          </button>
+
+          <h1 class="superior__titulo">Panel de control</h1>
+
+          <p class="usuario">
+            <span class="usuario__avatar">ED</span>
+            <span>
+              <span class="usuario__nombre">Edgar Duno</span>
+              <span class="usuario__rol">Administrador · Nacional</span>
+            </span>
+          </p>
+
+          <a class="btn-icono" href="login.html" aria-label="Cerrar sesión">
+            <svg class="icono icono--sm" aria-hidden="true"><use href="#i-salir" /></svg>
+          </a>
+        </header>
+
+        <main class="contenido" id="contenido">
+          <section class="seccion">
+            <header class="seccion__cabecera">
+              <h2 class="seccion__titulo">Estado de la red</h2>
+              <p class="seccion__nota">Cifras calculadas sobre los 14 nodos registrados</p>
+            </header>
+            <div class="kpis" data-kpis></div>
+          </section>
+
+          <section class="seccion">
+            <header class="seccion__cabecera">
+              <h2 class="seccion__titulo">Accesos directos</h2>
+            </header>
+            <nav class="atajos" aria-label="Accesos directos">
+              <a class="atajo" href="crud.html?nuevo">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-nuevo" /></svg>
+                Nuevo usuario
+              </a>
+              <a class="atajo" href="crud-cards.html?nuevo">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-nuevo" /></svg>
+                Nuevo nodo
+              </a>
+              <a class="atajo atajo--alerta" href="crud-cards.html?filtro=incidencia">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-alerta" /></svg>
+                Ver incidencias
+                <span class="atajo__cifra cifra" data-atajo-incidencias></span>
+              </a>
+              <a class="atajo" href="sistema_diseno.html">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-equipo" /></svg>
+                Sistema de diseño
+              </a>
+            </nav>
+          </section>
+
+          <section class="seccion">
+            <header class="seccion__cabecera">
+              <h2 class="seccion__titulo">Mapa de la red</h2>
+              <p class="seccion__nota">Nodos y enlaces de fibra por zona</p>
+            </header>
+            <div class="red">
+              <figure class="red__mapa" data-theme="dark">
+                <div class="red__lienzo" id="mapa-red" role="region" aria-label="Mapa de nodos de GEONET" data-mapa></div>
+                <p class="red__aviso" data-mapa-aviso hidden>
+                  No se pudo cargar el mapa. Revisa tu conexión a internet y recarga la página.
+                </p>
+                <figcaption class="red__leyenda">
+                  <span class="red__clave"><span class="red__muestra red__muestra--activo"></span>Activo</span>
+                  <span class="red__clave"><span class="red__muestra red__muestra--degradado"></span>Degradado</span>
+                  <span class="red__clave"><span class="red__muestra red__muestra--caido"></span>Caído</span>
+                </figcaption>
+              </figure>
+              <aside class="red__riel" aria-labelledby="riel-titulo">
+                <h3 class="red__subtitulo" id="riel-titulo">Nodos de la red</h3>
+                <ul class="riel" data-riel></ul>
+              </aside>
+            </div>
+          </section>
+
+          <section class="seccion">
+            <header class="seccion__cabecera">
+              <h2 class="seccion__titulo">Clientes por zona</h2>
+              <p class="seccion__nota">Suma de suscriptores conectados a los nodos de cada zona</p>
+            </header>
+            <div class="zonas" data-zonas></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <output class="toasts" aria-live="polite"></output>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="script.js" defer></script>
+  </body>
+</html>

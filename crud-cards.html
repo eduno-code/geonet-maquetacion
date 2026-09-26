@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nodos de red · GEONET</title>
+    <meta name="description" content="Inventario de nodos de la red de GEONET en formato de tarjetas." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body data-vista="nodos">
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <div class="app">
+      <aside class="lateral" id="menu-lateral" data-theme="dark">
+        <header class="lateral__cabecera">
+          <span class="logotipo">
+            <span class="logotipo__marca">
+              <svg class="icono" aria-hidden="true"><use href="#i-marca" /></svg>
+            </span>
+            GEONET
+          </span>
+        </header>
+
+        <nav class="lateral__nav" aria-label="Módulos del sistema">
+          <section class="lateral__grupo">
+            <p class="lateral__rotulo" id="grupo-operacion">Operación</p>
+            <ul aria-labelledby="grupo-operacion">
+              <li>
+                <a class="lateral__enlace" href="dashboard.html">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-panel" /></svg>
+                  Panel
+                </a>
+              </li>
+              <li>
+                <a class="lateral__enlace" href="crud-cards.html" aria-current="page">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-nodos" /></svg>
+                  Nodos de red
+                </a>
+              </li>
+              <li>
+                <a class="lateral__enlace" href="crud.html">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-clientes" /></svg>
+                  Usuarios
+                </a>
+              </li>
+            </ul>
+          </section>
+
+
+        </nav>
+      </aside>
+
+      <span class="velo" data-visible="false"></span>
+
+      <div class="area">
+        <header class="superior">
+          <button type="button" class="hamburguesa" aria-expanded="false" aria-controls="menu-lateral" aria-label="Abrir menú">
+            <svg class="icono" aria-hidden="true"><use href="#i-menu" /></svg>
+          </button>
+
+          <h1 class="superior__titulo">Nodos de red</h1>
+
+          <p class="usuario">
+            <span class="usuario__avatar">ED</span>
+            <span>
+              <span class="usuario__nombre">Edgar Duno</span>
+              <span class="usuario__rol">Administrador · Nacional</span>
+            </span>
+          </p>
+
+          <a class="btn-icono" href="login.html" aria-label="Cerrar sesión">
+            <svg class="icono icono--sm" aria-hidden="true"><use href="#i-salir" /></svg>
+          </a>
+        </header>
+
+        <main class="contenido" id="contenido">
+          <section class="seccion">
+            <header class="seccion__cabecera">
+              <h2 class="seccion__titulo">Inventario de nodos</h2>
+              <p class="seccion__nota">Centrales, nodos de acceso y radioenlaces por zona</p>
+            </header>
+
+            <form class="herramientas" role="search">
+              <label class="solo-lectores" for="buscar">Buscar nodo</label>
+              <span class="buscador">
+                <svg class="icono icono--sm buscador__icono" aria-hidden="true"><use href="#i-buscar" /></svg>
+                <input class="buscador__control" id="buscar" type="search" placeholder="Buscar por código, nombre o zona…" data-buscador />
+                <button type="button" class="buscador__limpiar" aria-label="Borrar búsqueda" title="Borrar búsqueda" data-limpiar hidden>
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+                </button>
+              </span>
+
+              <label class="solo-lectores" for="filtro-estado">Filtrar por estado</label>
+              <select class="filtro" id="filtro-estado" data-filtro>
+                <option value="todos">Todos los estados</option>
+                <option value="activo">Activos</option>
+                <option value="degradado">Degradados</option>
+                <option value="caido">Caídos</option>
+                <option value="incidencia">Con incidencia</option>
+              </select>
+
+              <p class="herramientas__cuenta" aria-live="polite" data-cuenta></p>
+
+              <span class="herramientas__derecha">
+                <button type="button" class="btn btn--primario" data-nuevo>
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-nuevo" /></svg>
+                  Nuevo nodo
+                </button>
+              </span>
+            </form>
+
+            <div class="cuadricula" data-lista data-envoltorio></div>
+
+            <p class="vacio" data-vacio hidden>
+              <svg class="icono" aria-hidden="true"><use href="#i-buscar" /></svg>
+              <strong>Ningún nodo coincide con la búsqueda</strong>
+              <span>Prueba con otro término o cambia el filtro de estado.</span>
+            </p>
+
+            <div class="paginador" data-paginador></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal de alta y edición -->
+    <dialog class="modal" id="modal-registro" aria-labelledby="modal-registro-titulo">
+      <form id="form-registro" novalidate>
+        <header class="modal__cabecera" data-theme="dark">
+          <span class="modal__emblema modal__emblema--acento">
+            <svg class="icono" aria-hidden="true"><use href="#i-nodos" /></svg>
+          </span>
+          <h2 class="modal__titulo" id="modal-registro-titulo">Nuevo nodo</h2>
+          <button type="button" class="modal__cerrar" data-cierra="modal-registro" aria-label="Cerrar">
+            <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+          </button>
+        </header>
+
+        <div class="modal__cuerpo">
+          <p class="modal__nota">Los campos marcados con <span class="obligatorio">*</span> son obligatorios.</p>
+          <div class="rejilla-campos">
+            <p class="campo">
+              <label class="campo__etiqueta" for="f-codigo">Código</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-nodos" /></svg>
+                <input class="campo__control" id="f-codigo" name="codigo" type="text" placeholder="CCS-07" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="f-nombre">Nombre del nodo</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-equipo" /></svg>
+                <input class="campo__control" id="f-nombre" name="nombre" type="text" placeholder="Nodo Los Palos Grandes" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="f-tipo">Tipo</label>
+              <select class="campo__control" id="f-tipo" name="tipo">
+                <option value="Central de fibra">Central de fibra</option>
+                <option value="Nodo de acceso">Nodo de acceso</option>
+                <option value="Radioenlace">Radioenlace</option>
+              </select>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="f-zona">Zona</label>
+              <select class="campo__control" id="f-zona" name="zona">
+                <option value="Caracas">Caracas</option>
+                <option value="Carabobo">Carabobo</option>
+                <option value="Aragua">Aragua</option>
+                <option value="Zulia">Zulia</option>
+                <option value="Anzoátegui">Anzoátegui</option>
+                <option value="Bolívar">Bolívar</option>
+              </select>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="f-clientes">Clientes conectados</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-clientes" /></svg>
+                <input class="campo__control" id="f-clientes" name="clientes" type="number" min="0" value="0" inputmode="numeric" />
+              </span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="f-enlaces">Enlaces</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-senal" /></svg>
+                <input class="campo__control" id="f-enlaces" name="enlaces" type="number" min="1" value="1" inputmode="numeric" />
+              </span>
+            </p>
+
+            <fieldset class="campo ancho-total segmentos">
+              <legend class="campo__etiqueta">Estado del nodo</legend>
+              <span class="segmentos__grupo">
+                <label class="segmento"><input type="radio" name="estado" value="activo" checked />Activo</label>
+                <label class="segmento"><input type="radio" name="estado" value="degradado" />Degradado</label>
+                <label class="segmento"><input type="radio" name="estado" value="caido" />Caído</label>
+              </span>
+            </fieldset>
+          </div>
+        </div>
+
+        <footer class="modal__pie">
+          <button type="button" class="btn btn--secundario" data-cierra="modal-registro">Cancelar</button>
+          <button type="submit" class="btn btn--primario">Guardar</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <!-- Confirmación de baja -->
+    <dialog class="modal modal--aviso" id="modal-baja" aria-labelledby="baja-titulo">
+      <header class="modal__cabecera modal__cabecera--aviso">
+        <span class="modal__emblema modal__emblema--aviso">
+          <svg class="icono" aria-hidden="true"><use href="#i-alerta" /></svg>
+        </span>
+        <h2 class="modal__titulo" id="baja-titulo">¿Seguro que quieres eliminar este registro?</h2>
+        <button type="button" class="modal__cerrar" data-cierra="modal-baja" aria-label="Cerrar">
+          <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+        </button>
+      </header>
+
+      <div class="modal__cuerpo">
+        <p class="modal__texto">Esta acción no se puede deshacer.</p>
+        <p class="insignia insignia--neutra" id="baja-detalle"></p>
+      </div>
+
+      <footer class="modal__pie">
+        <button type="button" class="btn btn--secundario" data-cierra="modal-baja">Cancelar</button>
+        <button type="button" class="btn btn--peligro" id="confirmar-baja">Eliminar</button>
+      </footer>
+    </dialog>
+
+    <output class="toasts" aria-live="polite"></output>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

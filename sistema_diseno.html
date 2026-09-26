@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistema de Diseño · GEONET</title>
+    <meta
+      name="description"
+      content="Documentación viva del sistema de diseño de GEONET: tipografía, paleta, iconos, botones, formularios, modales y alertas."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <div class="doc">
+      <nav class="doc__indice" aria-label="Secciones del sistema de diseño">
+        <h2 class="doc__indice-titulo">Contenido</h2>
+        <ul>
+          <li><a href="#tipografia">Tipografía</a></li>
+          <li><a href="#paleta">Paleta de color</a></li>
+          <li><a href="#iconos">Iconos</a></li>
+          <li><a href="#botones">Botones y estados</a></li>
+          <li><a href="#formularios">Formularios</a></li>
+          <li><a href="#avisos">Modales y alertas</a></li>
+          <li><a href="login.html">← Ir a la aplicación</a></li>
+        </ul>
+      </nav>
+
+      <main id="contenido">
+        <header class="doc__portada">
+          <h1>Sistema de diseño de GEONET</h1>
+          <p class="doc__lema">
+            Documentación viva de la interfaz de la plataforma de gestión de red
+            de GEONET. Todo lo que se ve en esta página es el mismo CSS que usan
+            el login, el panel y los módulos de gestión: no hay imágenes de
+            muestra ni código duplicado.
+          </p>
+          <p class="nota">
+            <span>
+              <strong>Sobre la paleta.</strong> GEONET opera en el sector de
+              telecomunicaciones, donde el azul es el color con el que el sector
+              comunica conectividad. El azul se eligió además por una razón
+              medible: deja los tonos rojo, ámbar y verde libres para los estados
+              de la red, de modo que un nodo caído nunca se confunde con un
+              elemento pulsable. Los 50 pares de color de esta página están
+              medidos y cumplen el contraste AA de la WCAG.
+            </span>
+          </p>
+        </header>
+
+        <!-- Tipografía -->
+        <section class="bloque" id="tipografia">
+          <h2 class="bloque__titulo">1. Tipografía</h2>
+          <p class="bloque__nota">
+            <strong>Outfit</strong> para títulos y marca: geométrica, de curvas
+            definidas y espaciado ajustado a <code>-0.02em</code>.
+            <strong>Open Sans</strong> para textos y tablas, por su apertura de
+            caracteres en formularios largos y datos densos.
+          </p>
+
+          <div class="panel">
+            <div class="tipo">
+              <span class="tipo__ficha">H1 · Outfit 800 · 36px</span>
+              <h1>Consola de red GEONET</h1>
+            </div>
+            <div class="tipo">
+              <span class="tipo__ficha">H2 · Outfit 700 · 28px</span>
+              <h2>Estado de la infraestructura</h2>
+            </div>
+            <div class="tipo">
+              <span class="tipo__ficha">H3 · Outfit 700 · 20px</span>
+              <h3>Nodos de acceso por zona</h3>
+            </div>
+            <div class="tipo">
+              <span class="tipo__ficha">H4 · Outfit 700 · 16px</span>
+              <h4>Central Chacao</h4>
+            </div>
+            <div class="tipo">
+              <span class="tipo__ficha">Cuerpo · Open Sans 400 · 14px</span>
+              <p>
+                Texto base de la interfaz. Se usa en descripciones, celdas de
+                tabla y mensajes de ayuda de los formularios.
+              </p>
+            </div>
+            <div class="tipo">
+              <span class="tipo__ficha">Cuerpo fuerte · Open Sans 600</span>
+              <p>
+                <strong>
+                  Se reserva para etiquetas de campo y datos principales de una
+                  fila.
+                </strong>
+              </p>
+            </div>
+            <div class="tipo">
+              <span class="tipo__ficha">Cifras · tabular-nums</span>
+              <p class="cifra">12.072 clientes · 78,6 % · 10°29'N 66°51'O</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Paleta -->
+        <section class="bloque" id="paleta">
+          <h2 class="bloque__titulo">2. Paleta de color</h2>
+          <p class="bloque__nota">
+            Cada muestra lleva su nombre, su variable de <code>:root</code> y su
+            valor HEX. Pulsa una muestra para copiar el código.
+          </p>
+
+          <h3>Marca e interfaz</h3>
+          <div class="panel">
+            <div class="muestras">
+              <button type="button" class="muestra" data-token="acento">
+                <span class="muestra__color m-acento"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Azul eléctrico</span>
+                  <span class="muestra__variable">--acento</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="acento-fuerte">
+                <span class="muestra__color m-acento-fuerte"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Azul profundo</span>
+                  <span class="muestra__variable">--acento-fuerte</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="acento-tenue">
+                <span class="muestra__color m-acento-tenue"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Azul tenue</span>
+                  <span class="muestra__variable">--acento-tenue</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="texto">
+                <span class="muestra__color m-texto"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Tinta</span>
+                  <span class="muestra__variable">--texto</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="texto-suave">
+                <span class="muestra__color m-texto-suave"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Tinta suave</span>
+                  <span class="muestra__variable">--texto-suave</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="fondo">
+                <span class="muestra__color m-fondo"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Fondo</span>
+                  <span class="muestra__variable">--fondo</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="superficie">
+                <span class="muestra__color m-superficie"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Superficie</span>
+                  <span class="muestra__variable">--superficie</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="borde-control">
+                <span class="muestra__color m-borde-control"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Borde de control</span>
+                  <span class="muestra__variable">--borde-control</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <h3>Estados de la red</h3>
+          <div class="panel">
+            <div class="muestras">
+              <button type="button" class="muestra" data-token="ok">
+                <span class="muestra__color m-ok"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Activo</span>
+                  <span class="muestra__variable">--ok</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="alerta">
+                <span class="muestra__color m-alerta"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Degradado</span>
+                  <span class="muestra__variable">--alerta</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="caido">
+                <span class="muestra__color m-caido"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Caído</span>
+                  <span class="muestra__variable">--caido</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="secundario">
+                <span class="muestra__color m-secundario"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Secundario</span>
+                  <span class="muestra__variable">--secundario</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="peligro">
+                <span class="muestra__color m-peligro"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Peligro</span>
+                  <span class="muestra__variable">--peligro</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="exito">
+                <span class="muestra__color m-exito"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Éxito</span>
+                  <span class="muestra__variable">--exito</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+              <button type="button" class="muestra" data-token="exito-fuerte">
+                <span class="muestra__color m-exito-fuerte"></span>
+                <span class="muestra__datos">
+                  <span class="muestra__nombre">Éxito en botón</span>
+                  <span class="muestra__variable">--exito-fuerte</span>
+                  <span class="muestra__hex"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <h3>Insignias en uso</h3>
+          <div class="panel">
+            <p class="disparadores">
+              <span class="insignia insignia--activo"
+                ><span class="punto"></span>Activo</span
+              >
+              <span class="insignia insignia--degradado"
+                ><span class="punto"></span>Degradado</span
+              >
+              <span class="insignia insignia--caido"
+                ><span class="punto"></span>Caído</span
+              >
+              <span class="insignia insignia--suspendido">Suspendido</span>
+              <span class="insignia insignia--rol-admin">Administrador</span>
+              <span class="insignia insignia--rol-operador">Operador</span>
+              <span class="insignia insignia--rol-tecnico">Técnico</span>
+              <span class="insignia insignia--rol-publico">Público</span>
+            </p>
+          </div>
+        </section>
+
+        <!-- Iconos -->
+        <section class="bloque" id="iconos">
+          <h2 class="bloque__titulo">3. Iconos</h2>
+          <p class="bloque__nota">
+            Iconografía vectorial propia, trazo de 1,7 px y esquinas
+            redondeadas. Se sirve como un único <code>&lt;symbol&gt;</code> por
+            icono y se hereda el color del texto, así que un icono dentro de un
+            botón rojo sale rojo sin declarar nada.
+          </p>
+
+          <div class="panel">
+            <div class="iconos">
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-nuevo" /></svg>Nuevo
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-editar" /></svg>Editar
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-eliminar" /></svg>Eliminar
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-buscar" /></svg>Buscar
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-filtro" /></svg>Filtro
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-usuario" /></svg>Usuario
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-candado" /></svg>Contraseña
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-check" /></svg>Éxito
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-alerta" /></svg>Aviso
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-error" /></svg>Error
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-nodos" /></svg>Nodos
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-clientes" /></svg>Clientes
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-senal" /></svg>Señal
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-menu" /></svg>Menú
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-cerrar" /></svg>Cerrar
+              </p>
+              <p class="icono-ficha">
+                <svg class="icono" aria-hidden="true"><use href="#i-salir" /></svg>Salir
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Botones -->
+        <section class="bloque" id="botones">
+          <h2 class="bloque__titulo">4. Botones · 4 variantes × 4 estados</h2>
+          <p class="bloque__nota">
+            Los cuatro estados se muestran a la vez: los de las columnas
+            <em>hover</em> y <em>foco</em> llevan el estado forzado con una clase
+            para poder verlos sin interactuar. Los botones de la columna
+            <em>normal</em> reaccionan de verdad al ratón y al teclado.
+          </p>
+
+          <div class="panel desliza">
+            <div class="estados">
+              <span></span>
+              <span class="estados__cabecera">Normal</span>
+              <span class="estados__cabecera">Hover</span>
+              <span class="estados__cabecera">Focus</span>
+              <span class="estados__cabecera">Disabled</span>
+
+              <span class="estados__variante">Primario</span>
+              <button type="button" class="btn btn--primario">Ingresar</button>
+              <button type="button" class="btn btn--primario es-hover">Ingresar</button>
+              <button type="button" class="btn btn--primario es-focus">Ingresar</button>
+              <button type="button" class="btn btn--primario" disabled>Ingresar</button>
+
+              <span class="estados__variante">Secundario</span>
+              <button type="button" class="btn btn--secundario">Cancelar</button>
+              <button type="button" class="btn btn--secundario es-hover">Cancelar</button>
+              <button type="button" class="btn btn--secundario es-focus">Cancelar</button>
+              <button type="button" class="btn btn--secundario" disabled>Cancelar</button>
+
+              <span class="estados__variante">Peligro</span>
+              <button type="button" class="btn btn--peligro">Eliminar</button>
+              <button type="button" class="btn btn--peligro es-hover">Eliminar</button>
+              <button type="button" class="btn btn--peligro es-focus">Eliminar</button>
+              <button type="button" class="btn btn--peligro" disabled>Eliminar</button>
+
+              <span class="estados__variante">Éxito</span>
+              <button type="button" class="btn btn--exito">Confirmar</button>
+              <button type="button" class="btn btn--exito es-hover">Confirmar</button>
+              <button type="button" class="btn btn--exito es-focus">Confirmar</button>
+              <button type="button" class="btn btn--exito" disabled>Confirmar</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Con icono, de bloque y de solo icono</h3>
+            <p class="disparadores">
+              <button type="button" class="btn btn--primario">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-nuevo" /></svg>
+                Nuevo nodo
+              </button>
+              <button type="button" class="btn btn--secundario btn--sm">Filtrar</button>
+              <button type="button" class="btn-icono" aria-label="Editar registro">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-editar" /></svg>
+              </button>
+              <button type="button" class="btn-icono btn-icono--peligro" aria-label="Eliminar registro">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-eliminar" /></svg>
+              </button>
+            </p>
+          </div>
+        </section>
+
+        <!-- Formularios -->
+        <section class="bloque" id="formularios">
+          <h2 class="bloque__titulo">5. Formularios y validación</h2>
+          <p class="bloque__nota">
+            Todo control lleva su <code>&lt;label&gt;</code> asociado. El mensaje
+            de error va <strong>debajo</strong> del campo y se anuncia con
+            <code>aria-describedby</code>, de modo que un lector de pantalla lo
+            lee al entrar en el campo.
+          </p>
+
+          <form class="panel" novalidate>
+            <div class="rejilla-campos">
+              <p class="campo">
+                <label class="campo__etiqueta" for="d-nombre">Nombre del nodo</label>
+                <span class="campo__caja">
+                  <input class="campo__control" id="d-nombre" type="text" value="Central Chacao" />
+                </span>
+                <span class="campo__ayuda">Estado normal.</span>
+              </p>
+
+              <p class="campo">
+                <label class="campo__etiqueta" for="d-correo">Correo de contacto</label>
+                <span class="campo__caja">
+                  <input class="campo__control" id="d-correo" type="email" placeholder="tecnico@geonet.ve" />
+                </span>
+                <span class="campo__ayuda">Pulsa dentro para ver el estado de foco.</span>
+              </p>
+
+              <p class="campo campo--error">
+                <label class="campo__etiqueta" for="d-error">Código del nodo</label>
+                <span class="campo__caja">
+                  <input class="campo__control" id="d-error" type="text" value="CCS" aria-invalid="true" aria-describedby="d-error-aviso" />
+                </span>
+                <span class="campo__error" id="d-error-aviso">
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-alerta" /></svg>
+                  El código debe tener el formato ZZZ-00.
+                </span>
+              </p>
+
+              <p class="campo">
+                <label class="campo__etiqueta" for="d-bloq">Identificador interno</label>
+                <span class="campo__caja">
+                  <input class="campo__control" id="d-bloq" type="text" value="n-01-ccs" disabled />
+                </span>
+                <span class="campo__ayuda">Estado deshabilitado.</span>
+              </p>
+
+              <p class="campo">
+                <label class="campo__etiqueta" for="d-clave">Contraseña</label>
+                <span class="campo__caja">
+                  <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-candado" /></svg>
+                  <input class="campo__control" id="d-clave" type="password" value="geonet2026" />
+                  <button type="button" class="campo__ojo" aria-label="Mostrar contraseña">
+                    <svg class="icono icono--sm" aria-hidden="true"><use href="#i-ojo" /></svg>
+                  </button>
+                </span>
+                <span class="campo__ayuda">Con icono de apoyo y botón de ver.</span>
+              </p>
+
+              <p class="campo">
+                <label class="campo__etiqueta" for="d-zona">Zona</label>
+                <select class="campo__control" id="d-zona">
+                  <option>Caracas</option>
+                  <option>Carabobo</option>
+                  <option>Zulia</option>
+                  <option>Aragua</option>
+                </select>
+                <span class="campo__ayuda">Selector desplegable.</span>
+              </p>
+
+              <p class="campo ancho-total">
+                <label class="campo__etiqueta" for="d-notas">Observaciones de campo</label>
+                <textarea class="campo__control" id="d-notas" rows="3" placeholder="Incidencias detectadas en la última visita técnica."></textarea>
+              </p>
+            </div>
+
+            <fieldset class="campo ancho-total">
+              <legend class="campo__etiqueta">Tipo de nodo</legend>
+              <span class="grupo-radios">
+                <label class="marca"><input type="radio" name="d-tipo" checked /> Central de fibra</label>
+                <label class="marca"><input type="radio" name="d-tipo" /> Nodo de acceso</label>
+                <label class="marca"><input type="radio" name="d-tipo" /> Radioenlace</label>
+                <label class="marca"><input type="radio" name="d-tipo" disabled /> Enlace satelital</label>
+              </span>
+            </fieldset>
+
+            <p class="fila-opciones">
+              <label class="marca"><input type="checkbox" checked /> Notificar caídas por correo</label>
+              <label class="marca"><input type="checkbox" disabled /> Modo mantenimiento</label>
+            </p>
+          </form>
+        </section>
+
+        <!-- Modales y alertas -->
+        <section class="bloque" id="avisos">
+          <h2 class="bloque__titulo">6. Modales y alertas</h2>
+          <p class="bloque__nota">
+            Los modales son elementos <code>&lt;dialog&gt;</code> nativos: el
+            navegador atrapa el foco dentro, oscurece el resto y cierra con
+            <kbd>Esc</kbd> sin que haya que programarlo. Los toast muestran los
+            segundos dentro de un anillo que se vacía, se cierran solos y se
+            pausan al pasar el ratón; el anillo se convierte en la X para
+            cerrarlos antes.
+          </p>
+
+          <div class="panel">
+            <h3>Pruébalos</h3>
+            <p class="bloque__nota">Cada botón abre el componente de verdad, no una imagen.</p>
+            <p class="disparadores">
+              <button type="button" class="btn btn--exito" data-abre="modal-exito">Modal de éxito</button>
+              <button type="button" class="btn btn--peligro" data-abre="modal-error">Modal de error</button>
+              <button type="button" class="btn btn--secundario" data-abre="modal-confirmar">Confirmar baja</button>
+              <button type="button" class="btn btn--primario" data-toast="exito">Toast de éxito</button>
+              <button type="button" class="btn btn--primario" data-toast="error">Toast de error</button>
+              <button type="button" class="btn btn--primario" data-toast="aviso">Toast de aviso</button>
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Componentes emergentes -->
+
+    <dialog class="modal modal--aviso" id="modal-exito" aria-labelledby="exito-titulo">
+      <header class="modal__cabecera modal__cabecera--exito">
+        <span class="modal__emblema modal__emblema--exito">
+          <svg class="icono" aria-hidden="true"><use href="#i-check" /></svg>
+        </span>
+        <h2 class="modal__titulo" id="exito-titulo">¡Registro exitoso!</h2>
+        <button type="button" class="modal__cerrar" data-cierra="modal-exito" aria-label="Cerrar">
+          <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+        </button>
+      </header>
+      <div class="modal__cuerpo">
+        <p class="modal__texto">Los datos fueron guardados correctamente y la lista ya está actualizada.</p>
+      </div>
+      <footer class="modal__pie">
+        <button type="button" class="btn btn--primario" data-cierra="modal-exito">Aceptar</button>
+      </footer>
+    </dialog>
+
+    <dialog class="modal modal--aviso" id="modal-error" aria-labelledby="error-titulo">
+      <header class="modal__cabecera modal__cabecera--error">
+        <span class="modal__emblema modal__emblema--error">
+          <svg class="icono" aria-hidden="true"><use href="#i-error" /></svg>
+        </span>
+        <h2 class="modal__titulo" id="error-titulo">Error al procesar datos</h2>
+        <button type="button" class="modal__cerrar" data-cierra="modal-error" aria-label="Cerrar">
+          <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+        </button>
+      </header>
+      <div class="modal__cuerpo">
+        <p class="modal__texto">
+          Revisa los campos obligatorios. Lo que ya escribiste se mantiene
+          en el formulario para que puedas corregirlo.
+        </p>
+      </div>
+      <footer class="modal__pie">
+        <button type="button" class="btn btn--secundario" data-cierra="modal-error">Cerrar</button>
+        <button type="button" class="btn btn--primario" data-cierra="modal-error">Reintentar</button>
+      </footer>
+    </dialog>
+
+    <dialog class="modal modal--aviso" id="modal-confirmar" aria-labelledby="confirmar-titulo">
+      <header class="modal__cabecera modal__cabecera--aviso">
+        <span class="modal__emblema modal__emblema--aviso">
+          <svg class="icono" aria-hidden="true"><use href="#i-alerta" /></svg>
+        </span>
+        <h2 class="modal__titulo" id="confirmar-titulo">¿Eliminar este registro?</h2>
+        <button type="button" class="modal__cerrar" data-cierra="modal-confirmar" aria-label="Cerrar">
+          <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+        </button>
+      </header>
+      <div class="modal__cuerpo">
+        <p class="modal__texto">
+          Estás a punto de dar de baja <strong>Nodo Catia · CCS-06</strong>. Esta
+          acción no se puede deshacer.
+        </p>
+      </div>
+      <footer class="modal__pie">
+        <button type="button" class="btn btn--secundario" data-cierra="modal-confirmar">Cancelar</button>
+        <button type="button" class="btn btn--peligro" data-cierra="modal-confirmar">Eliminar</button>
+      </footer>
+    </dialog>
+
+    <output class="toasts" aria-live="polite"></output>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
