@@ -1040,7 +1040,7 @@ select.campo__control {
 
 .lateral__nav {
   flex: 1;
-  padding: var(--e-4) var(--e-3);
+  padding: var(--e-5) var(--e-3);
   overflow-y: auto;
 }
 
@@ -1058,30 +1058,53 @@ select.campo__control {
   color: var(--texto-suave);
 }
 
+.lateral__grupo ul {
+  display: grid;
+  gap: var(--e-1);
+}
+
 .lateral__enlace {
   display: flex;
   align-items: center;
   gap: var(--e-3);
-  min-height: var(--toque-min);
-  padding: 0 var(--e-3);
+  min-height: 48px;
+  padding: 0 var(--e-4);
   font-size: var(--t-md);
   color: var(--texto-suave);
   text-decoration: none;
   border-radius: var(--r-md);
   transition:
     color var(--trans),
-    background-color var(--trans);
+    background-color var(--trans),
+    transform var(--trans);
+}
+
+.lateral__enlace .icono {
+  transition: color var(--trans);
 }
 
 .lateral__enlace:hover {
   color: var(--texto);
-  background-color: var(--superficie-alta);
+  background-color: color-mix(in srgb, var(--texto) 8%, transparent);
+  transform: translateX(2px);
+}
+
+.lateral__enlace:hover .icono {
+  color: var(--acento);
 }
 
 .lateral__enlace[aria-current='page'] {
-  color: var(--acento);
+  color: var(--texto);
   font-weight: var(--p-semi);
-  background-color: var(--acento-tenue);
+  background-color: color-mix(in srgb, var(--acento) 22%, transparent);
+}
+
+.lateral__enlace[aria-current='page'] .icono {
+  color: var(--acento);
+}
+
+.lateral__enlace[aria-current='page']:hover {
+  transform: none;
 }
 
 .usuario {
