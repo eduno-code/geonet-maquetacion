@@ -712,16 +712,22 @@ function pintarZonas() {
   });
 
   const mayor = Math.max(...Object.values(porZona).map((z) => z.clientes));
+  const total = Object.values(porZona).reduce((suma, z) => suma + z.clientes, 0);
 
   zona.innerHTML = Object.entries(porZona)
     .sort((a, b) => b[1].clientes - a[1].clientes)
     .map(
-      ([nombre, datos]) => `
-      <p class="zona">
-        <span>${nombre}</span>
+      ([nombre, datos]) => {
+        const clientes = datos.clientes.toLocaleString('es-VE');
+        const parte = `${Math.round((datos.clientes / total) * 100)} %`;
+        const nodos = `${datos.nodos} ${datos.nodos === 1 ? 'nodo' : 'nodos'}`;
+        return `
+      <li class="zona" title="${nombre}: ${clientes} clientes · ${parte} del total · ${nodos}">
+        <span class="zona__nombre">${nombre}<small>${icono('nodos')}${nodos}</small></span>
+        <span class="zona__cifra cifra">${clientes}<small>${parte}</small></span>
         <span class="zona__barra"><span class="zona__relleno" data-porcentaje="${(datos.clientes / mayor) * 100}"></span></span>
-        <span class="zona__cifra cifra">${datos.clientes.toLocaleString('es-VE')}</span>
-      </p>`
+      </li>`;
+      }
     )
     .join('');
 

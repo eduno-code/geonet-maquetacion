@@ -1958,11 +1958,6 @@ select.filtro {
   }
 }
 
-.caja .zonas {
-  padding: 0;
-  border: none;
-}
-
 /* Accesos directos */
 .atajos {
   display: flex;
@@ -2207,23 +2202,87 @@ select.filtro {
 /* Clientes por zona */
 .zonas {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  justify-content: space-between;
   gap: var(--e-3);
-  padding: var(--e-4);
-  background-color: var(--superficie);
-  border: 1px solid var(--borde);
-  border-radius: var(--r-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: puesto;
 }
 
 .zona {
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr) 64px;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  grid-template-areas:
+    'puesto nombre cifra'
+    'puesto barra barra';
   align-items: center;
-  gap: var(--e-3);
+  gap: 4px var(--e-3);
+  font-size: var(--t-md);
+  counter-increment: puesto;
+}
+
+.zona::before {
+  content: counter(puesto);
+  grid-area: puesto;
+  align-self: start;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-family: var(--f-titulo);
   font-size: var(--t-sm);
+  font-weight: var(--p-fuerte);
+  color: var(--acento);
+  background-color: var(--acento-tenue);
+  border-radius: 50%;
+}
+
+.zona:first-child::before {
+  color: var(--sobre-estado);
+  background-color: var(--marca-solida);
+}
+
+.zona__nombre {
+  grid-area: nombre;
+  display: grid;
+  line-height: 1.25;
+  font-weight: var(--p-semi);
+}
+
+.zona__nombre small,
+.zona__cifra small {
+  font-family: var(--f-texto);
+  font-size: var(--t-xs);
+  font-weight: var(--p-normal);
+  color: var(--texto-suave);
+}
+
+.zona__nombre small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.zona__nombre .icono {
+  width: 12px;
+  height: 12px;
+}
+
+.zona__cifra {
+  grid-area: cifra;
+  display: grid;
+  justify-items: end;
+  line-height: 1.2;
+  font-family: var(--f-titulo);
+  font-weight: var(--p-fuerte);
+  font-variant-numeric: tabular-nums;
 }
 
 .zona__barra {
+  grid-area: barra;
   height: 8px;
   background-color: var(--superficie-alta);
   border-radius: 999px;
@@ -2234,14 +2293,12 @@ select.filtro {
   display: block;
   width: 0;
   height: 100%;
-  background-color: var(--acento);
+  background-color: color-mix(in srgb, var(--acento) 45%, var(--superficie));
   border-radius: 999px;
 }
 
-.zona__cifra {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  color: var(--texto-suave);
+.zona:first-child .zona__relleno {
+  background-color: var(--marca-solida);
 }
 
 /* 9. BARRA DE HERRAMIENTAS DEL CRUD */
@@ -3530,10 +3587,6 @@ td.tabla__secundario {
 
   .modal__pie .btn {
     width: 100%;
-  }
-
-  .zona {
-    grid-template-columns: 104px minmax(0, 1fr) 56px;
   }
 
   .herramientas__derecha {
