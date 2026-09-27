@@ -67,6 +67,7 @@ const SPRITE = `
   <symbol id="i-salir" viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></symbol>
   <symbol id="i-ir" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-manchas" viewBox="0 0 120 72"><path d="M0 34c14-6 22 6 20 16-2 9 8 12 16 8 10-5 20 2 18 10-1 3-2 4-3 4H0Z"/><circle cx="46" cy="40" r="7"/><circle cx="10" cy="22" r="5"/><circle cx="62" cy="54" r="3"/></symbol>
 </svg>`;
 
 function icono(nombre, clase = 'icono') {
@@ -153,9 +154,9 @@ function mostrarToast({ tipo = 'exito', titulo = '', texto = '', segundos, accio
 
   const toast = document.createElement('article');
   toast.className = `toast toast--${tipo}`;
-  toast.dataset.theme = document.body.classList.contains('pantalla-acceso') ? 'light' : 'dark';
   if (tipo === 'error') toast.setAttribute('role', 'alert');
   toast.innerHTML = `
+    <span class="toast__manchas">${icono('manchas', '')}</span>
     <span class="toast__icono">${icono(iconos[tipo] || 'senal')}</span>
     <div class="toast__cuerpo">
       <p class="toast__titulo">${titulo}</p>

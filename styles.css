@@ -2774,30 +2774,49 @@ td.tabla__secundario {
   z-index: var(--capa-toast);
   display: flex;
   flex-direction: column;
-  gap: var(--e-2);
-  width: min(360px, calc(100vw - var(--e-6)));
+  gap: var(--e-5);
+  width: min(380px, calc(100vw - var(--e-6)));
+  padding-top: 14px;
   pointer-events: none;
 }
 
 .toast {
   position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: var(--e-3);
-  padding: var(--e-3) var(--e-3) var(--e-3) var(--e-4);
+  min-height: 72px;
+  padding: var(--e-3) 60px var(--e-3) 68px;
   pointer-events: auto;
-  color: var(--texto);
-  background-color: var(--superficie);
-  border: 1px solid var(--borde);
+  color: var(--sobre-estado);
+  background-color: var(--tono);
   border-radius: var(--r-lg);
-  box-shadow: var(--sombra-alta);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.28);
   animation: entrar-toast var(--trans-lenta) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.toast--exito { --tono: var(--ok); --tono-tenue: var(--ok-tenue); }
-.toast--error { --tono: var(--caido); --tono-tenue: var(--caido-tenue); }
-.toast--aviso { --tono: var(--alerta); --tono-tenue: var(--alerta-tenue); }
-.toast--info { --tono: var(--acento); --tono-tenue: var(--acento-tenue); }
+.toast--exito { --tono: var(--exito-fuerte); }
+.toast--error { --tono: var(--peligro); }
+.toast--aviso { --tono: var(--aviso-fuerte); }
+.toast--info { --tono: var(--marca-solida); }
+
+.toast__manchas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.toast__manchas svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  height: 72px;
+  fill: rgb(0 0 0 / 0.2);
+}
 
 .toast--saliendo {
   opacity: 0;
@@ -2831,14 +2850,23 @@ td.tabla__secundario {
 }
 
 .toast__icono {
+  position: absolute;
+  top: -14px;
+  left: var(--e-3);
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  color: var(--tono);
-  background-color: var(--tono-tenue);
-  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  background-color: color-mix(in srgb, var(--tono) 62%, #000);
+  border: 3px solid var(--tono);
+  border-radius: 50% 50% 50% 8px;
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.25);
+}
+
+.toast__icono .icono {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2.6;
 }
 
 .toast__cuerpo {
@@ -2853,7 +2881,7 @@ td.tabla__secundario {
 
 .toast__texto {
   font-size: var(--t-sm);
-  color: var(--texto-suave);
+  color: rgb(255 255 255 / 0.9);
 }
 
 .toast__accion {
@@ -2862,24 +2890,27 @@ td.tabla__secundario {
   padding: 0 var(--e-3);
   font-size: var(--t-sm);
   font-weight: var(--p-semi);
-  color: var(--acento);
+  color: inherit;
+  background-color: rgb(255 255 255 / 0.16);
+  border: 1px solid rgb(255 255 255 / 0.45);
   border-radius: var(--r-sm);
   transition: background-color var(--trans);
 }
 
 .toast__accion:hover {
-  background-color: var(--acento-tenue);
+  background-color: rgb(255 255 255 / 0.28);
 }
 
 /* Anillo de cuenta atrás */
 .toast__cerrar {
-  position: relative;
+  position: absolute;
+  top: var(--e-2);
+  right: var(--e-2);
   display: grid;
   place-items: center;
   width: var(--toque-min);
   height: var(--toque-min);
-  flex-shrink: 0;
-  color: var(--texto);
+  color: inherit;
   border-radius: 50%;
 }
 
@@ -2898,11 +2929,11 @@ td.tabla__secundario {
 }
 
 .toast__pista {
-  stroke: var(--borde);
+  stroke: rgb(255 255 255 / 0.25);
 }
 
 .toast__avance {
-  stroke: var(--tono);
+  stroke: currentColor;
   stroke-linecap: round;
   stroke-dasharray: 107;
   stroke-dashoffset: 0;
@@ -2927,7 +2958,7 @@ td.tabla__secundario {
 }
 
 .toast__cerrar:hover {
-  background-color: var(--superficie-alta);
+  background-color: rgb(255 255 255 / 0.16);
 }
 
 /* 15. PÁGINA DEL SISTEMA DE DISEÑO */
