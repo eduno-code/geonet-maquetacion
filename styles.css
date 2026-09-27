@@ -1204,6 +1204,67 @@ select.campo__control {
   }
 }
 
+/* Acceso en móvil: franja con la foto y hoja con el formulario */
+@media (max-width: 768px) {
+  .pantalla-acceso.pantalla-acceso--partida {
+    grid-template-rows: auto 1fr;
+    padding: 0;
+    background-color: var(--superficie);
+  }
+
+  .acceso-marca {
+    min-height: 260px;
+    gap: var(--e-5);
+    padding: var(--e-5) var(--e-5) calc(var(--e-5) + 24px);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--noche-solido) 40%, transparent) 0%, transparent 35%, color-mix(in srgb, var(--noche-solido) 75%, transparent) 100%),
+      url('img/fibra-optica.jpg') center / cover no-repeat,
+      var(--noche-solido);
+  }
+
+  .acceso-marca__lema {
+    max-width: 18ch;
+    font-size: var(--t-xl);
+  }
+
+  .acceso-marca__detalle {
+    display: none;
+  }
+
+  .acceso-formulario {
+    position: relative;
+    z-index: 1;
+    place-items: start center;
+    margin-top: -24px;
+    padding: var(--e-6) var(--e-5) var(--e-6);
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -8px 24px rgb(0 0 0 / 0.12);
+  }
+
+  .pantalla-acceso--partida .tarjeta-acceso {
+    max-width: 440px;
+  }
+
+  .pantalla-acceso--partida .marca-acceso {
+    align-items: center;
+    margin-bottom: var(--e-5);
+    text-align: center;
+  }
+
+  .pantalla-acceso--partida .marca-acceso__titulo {
+    font-size: var(--t-2xl);
+    color: var(--marca-solida);
+  }
+
+  .pantalla-acceso--partida .formulario-acceso {
+    gap: var(--e-4);
+  }
+
+  .pantalla-acceso--partida .pie-acceso {
+    margin-top: var(--e-5);
+  }
+}
+
 /* 7. ARMAZÓN DE LA APLICACIÓN */
 
 .app {
@@ -3397,20 +3458,12 @@ td.tabla__secundario {
     box-shadow var(--trans);
 }
 
-.pie-acceso .btn--secundario .icono {
-  transition: transform var(--trans);
-}
-
 .pie-acceso .btn--secundario:hover {
   color: var(--sobre-estado);
   background-color: var(--marca-solida);
   border-color: var(--marca-solida);
   transform: translateY(-2px);
   box-shadow: 0 10px 24px color-mix(in srgb, var(--marca-solida) 40%, transparent);
-}
-
-.pie-acceso .btn--secundario:hover .icono {
-  transform: translateX(4px);
 }
 
 /* Acceso: altura de la ventana */
