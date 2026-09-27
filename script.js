@@ -153,7 +153,7 @@ function mostrarToast({ tipo = 'exito', titulo = '', texto = '', segundos, accio
 
   const toast = document.createElement('article');
   toast.className = `toast toast--${tipo}`;
-  toast.dataset.theme = 'dark';
+  toast.dataset.theme = document.body.classList.contains('pantalla-acceso') ? 'light' : 'dark';
   if (tipo === 'error') toast.setAttribute('role', 'alert');
   toast.innerHTML = `
     <span class="toast__icono">${icono(iconos[tipo] || 'senal')}</span>
