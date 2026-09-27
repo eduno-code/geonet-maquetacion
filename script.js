@@ -140,12 +140,12 @@ function contenedorToasts() {
   return zona;
 }
 
-const DURACION_TOAST = { exito: 4, info: 4, aviso: 5, error: 6 };
+const DURACION_TOAST = { exito: 4, info: 4, aviso: 5, error: 6, neutro: 6 };
 const MAXIMO_TOASTS = 3;
 const VUELTA_ANILLO = 107;
 
 function mostrarToast({ tipo = 'exito', titulo = '', texto = '', segundos, accion }) {
-  const iconos = { exito: 'check', error: 'error', aviso: 'alerta', info: 'senal' };
+  const iconos = { exito: 'check', error: 'error', aviso: 'alerta', info: 'senal', neutro: 'eliminar' };
   const total = segundos ?? (accion ? 6 : DURACION_TOAST[tipo]);
   const zona = contenedorToasts();
 
@@ -510,27 +510,40 @@ function pintarIndicadores() {
 }
 
 function pintarEstados() {
-  const dona = document.querySelector('[data-dona]');
-  if (!dona) return;
+  const zona = document.querySelector('[data-salud]');
+  if (!zona) return;
+  const estados = [
+    { clave: 'activo', singular: 'Activo', plural: 'Activos', icono: 'check' },
+    { clave: 'degradado', singular: 'Degradado', plural: 'Degradados', icono: 'alerta' },
+    { clave: 'caido', singular: 'Caído', plural: 'Caídos', icono: 'error' },
+  ];
   const cuenta = { activo: 0, degradado: 0, caido: 0 };
   NODOS.forEach((n) => { cuenta[n.estado] += 1; });
   const total = NODOS.length;
-  const activo = (cuenta.activo / total) * 100;
-  const degradado = activo + (cuenta.degradado / total) * 100;
+  const rotulo = (e) => (cuenta[e.clave] === 1 ? e.singular : e.plural);
 
-  dona.innerHTML = `
-    <p class="dona__grafico" role="img" aria-label="${cuenta.activo} activos, ${cuenta.degradado} degradados y ${cuenta.caido} caído de ${total} nodos">
-      <span class="dona__centro"><span class="dona__total cifra">${total}</span> nodos</span>
+  const hueco = 1.5;
+  let recorrido = 0;
+  const arcos = estados.map((e) => {
+    const largo = (cuenta[e.clave] / total) * 100;
+    const inicio = recorrido;
+    recorrido += largo;
+    if (!largo) return '';
+    return `<path class="salud__arco salud__arco--${e.clave}" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" stroke-dasharray="${Math.max(largo - hueco, 0.5)} 100" stroke-dashoffset="${-(inicio + hueco / 2)}"><title>${rotulo(e)}: ${cuenta[e.clave]}</title></path>`;
+  }).join('');
+
+  zona.innerHTML = `
+    <p class="salud__medidor" role="img" aria-label="${estados.map((e) => `${cuenta[e.clave]} ${rotulo(e).toLowerCase()}`).join(', ')} de ${total} nodos">
+      <svg viewBox="0 0 200 104">${arcos}</svg>
+      <span class="salud__total"><b class="cifra">${total}</b> nodos en la red</span>
     </p>
-    <dl class="dona__leyenda">
-      ${['activo', 'degradado', 'caido'].map((e) => `
-        <div class="dona__dato">
-          <dt><span class="red__muestra red__muestra--${e}"></span>${ETIQUETA_ESTADO[e]}</dt>
-          <dd class="cifra">${cuenta[e]}</dd>
+    <dl class="salud__leyenda">
+      ${estados.map((e) => `
+        <div class="salud__dato salud__dato--${e.clave}">
+          <dt>${icono(e.icono, 'icono icono--sm')}${rotulo(e)}</dt>
+          <dd class="cifra">${cuenta[e.clave]}</dd>
         </div>`).join('')}
     </dl>`;
-  dona.querySelector('.dona__grafico').style.setProperty('--activo', `${activo}%`);
-  dona.querySelector('.dona__grafico').style.setProperty('--degradado', `${degradado}%`);
 }
 
 /* Altas desde el panel */
@@ -787,9 +800,9 @@ function iniciarCrud(config) {
     paginador.innerHTML = `
       <p class="paginador__estado">Mostrando <span class="cifra">${desde}-${hasta}</span> de <span class="cifra">${total}</span> ${config.nombrePlural}</p>
       <p class="paginador__botones">
-        <button type="button" class="paginador__pagina" data-salto="-1" ${pagina === 1 ? 'disabled' : ''} aria-label="Página anterior">‹</button>
+        <button type="button" class="paginador__pagina" data-salto="-1" ${pagina === 1 ? 'disabled' : ''} aria-label="Página anterior">${icono('flecha', 'icono icono--sm paginador__atras')}</button>
         ${botones}
-        <button type="button" class="paginador__pagina" data-salto="1" ${pagina === paginas ? 'disabled' : ''} aria-label="Página siguiente">›</button>
+        <button type="button" class="paginador__pagina" data-salto="1" ${pagina === paginas ? 'disabled' : ''} aria-label="Página siguiente">${icono('flecha', 'icono icono--sm')}</button>
       </p>`;
 
     paginador.querySelectorAll('[data-pagina]').forEach((boton) => {
@@ -902,7 +915,7 @@ function iniciarCrud(config) {
     cerrarModal('modal-baja');
     pintar();
     mostrarToast({
-      tipo: 'exito',
+      tipo: 'neutro',
       titulo: 'Registro eliminado',
       texto: `Se dio de baja a ${eliminado[config.campoTitulo]}.`,
       accion: {
