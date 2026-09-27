@@ -1383,11 +1383,13 @@ select.filtro {
 
 /* Tarjeta de perfil */
 .perfil {
-  position-anchor: --perfil;
   inset: auto;
-  top: calc(anchor(bottom) + var(--e-2));
-  right: anchor(right);
+  top: calc(var(--superior-alto) + var(--e-2));
+  right: var(--e-4);
   display: none;
+  height: auto;
+  max-height: calc(100dvh - var(--superior-alto) - var(--e-5));
+  overflow-y: auto;
   width: min(360px, calc(100vw - var(--e-6)));
   margin: 0;
   padding: var(--e-3) var(--e-4) var(--e-4);
@@ -1399,8 +1401,17 @@ select.filtro {
   box-shadow: var(--sombra-flotante);
 }
 
+@supports (top: anchor(bottom)) {
+  .perfil {
+    position-anchor: --perfil;
+    top: calc(anchor(bottom) + var(--e-2));
+    right: anchor(right);
+  }
+}
+
 .perfil:popover-open {
   display: grid;
+  align-content: start;
   justify-items: center;
   animation: entrar-modal var(--trans-lenta) ease-out;
 }
@@ -3438,6 +3449,10 @@ td.tabla__secundario {
     padding: var(--e-3);
     text-align: left;
     border-radius: 20px;
+  }
+
+  [data-vista='panel'] .perfil {
+    top: calc(var(--superior-alto) + var(--e-3) + var(--e-2));
   }
 
   .perfil:popover-open {
