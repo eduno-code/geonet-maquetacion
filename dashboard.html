@@ -115,14 +115,14 @@
           <header class="resumen">
             <p class="resumen__fecha" data-fecha></p>
             <nav class="atajos" aria-label="Accesos directos">
-              <a class="atajo" href="crud.html?nuevo" aria-label="Nuevo usuario" data-etiqueta="Nuevo usuario">
+              <button type="button" class="atajo" data-abre="modal-usuario" aria-label="Nuevo usuario" data-etiqueta="Nuevo usuario">
                 <svg class="icono" aria-hidden="true"><use href="#i-usuario" /></svg>
                 <span class="atajo__mas" aria-hidden="true"><svg class="icono" aria-hidden="true"><use href="#i-nuevo" /></svg></span>
-              </a>
-              <a class="atajo" href="crud-cards.html?nuevo" aria-label="Nuevo nodo" data-etiqueta="Nuevo nodo">
+              </button>
+              <button type="button" class="atajo" data-abre="modal-nodo" aria-label="Nuevo nodo" data-etiqueta="Nuevo nodo">
                 <svg class="icono" aria-hidden="true"><use href="#i-nodos" /></svg>
                 <span class="atajo__mas" aria-hidden="true"><svg class="icono" aria-hidden="true"><use href="#i-nuevo" /></svg></span>
-              </a>
+              </button>
             </nav>
           </header>
 
@@ -185,6 +185,179 @@
         </main>
       </div>
     </div>
+
+    <!-- Altas desde el panel -->
+    <dialog class="modal" id="modal-usuario" aria-labelledby="modal-usuario-titulo">
+      <form id="form-usuario" novalidate>
+        <header class="modal__cabecera" data-theme="dark">
+          <span class="modal__emblema modal__emblema--acento">
+            <svg class="icono" aria-hidden="true"><use href="#i-usuario" /></svg>
+          </span>
+          <h2 class="modal__titulo" id="modal-usuario-titulo">Nuevo usuario</h2>
+          <button type="button" class="modal__cerrar" data-cierra="modal-usuario" aria-label="Cerrar">
+            <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+          </button>
+        </header>
+
+        <div class="modal__cuerpo">
+          <p class="modal__nota">Los campos marcados con <span class="obligatorio">*</span> son obligatorios.</p>
+          <div class="rejilla-campos">
+            <p class="campo ancho-total">
+              <label class="campo__etiqueta" for="fu-nombre">Nombre completo</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-usuario" /></svg>
+                <input class="campo__control" id="fu-nombre" name="nombre" type="text" placeholder="Ej. Ana Pérez" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fu-usuario">Usuario</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-equipo" /></svg>
+                <input class="campo__control" id="fu-usuario" name="usuario" type="text" placeholder="aperez" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fu-correo">Correo</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-correo" /></svg>
+                <input class="campo__control" id="fu-correo" name="correo" type="email" placeholder="aperez@geonet.ve" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fu-rol">Rol</label>
+              <select class="campo__control" id="fu-rol" name="rol" required>
+                <option value="" disabled selected>Selecciona un rol</option>
+                <option value="admin">Administrador</option>
+                <option value="operador">Operador</option>
+                <option value="tecnico">Técnico</option>
+                <option value="publico">Público</option>
+              </select>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fu-zona">Zona</label>
+              <select class="campo__control" id="fu-zona" name="zona">
+                <option value="Nacional">Nacional</option>
+                <option value="Caracas">Caracas</option>
+                <option value="Carabobo">Carabobo</option>
+                <option value="Aragua">Aragua</option>
+                <option value="Zulia">Zulia</option>
+                <option value="Anzoátegui">Anzoátegui</option>
+                <option value="Bolívar">Bolívar</option>
+              </select>
+            </p>
+
+            <fieldset class="campo ancho-total segmentos">
+              <legend class="campo__etiqueta">Estado de la cuenta</legend>
+              <span class="segmentos__grupo">
+                <label class="segmento"><input type="radio" name="estado" value="activo" checked />Activo</label>
+                <label class="segmento"><input type="radio" name="estado" value="suspendido" />Suspendido</label>
+              </span>
+            </fieldset>
+          </div>
+        </div>
+
+        <footer class="modal__pie">
+          <button type="button" class="btn btn--secundario" data-cierra="modal-usuario">Cancelar</button>
+          <button type="submit" class="btn btn--primario">Crear usuario</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="modal-nodo" aria-labelledby="modal-nodo-titulo">
+      <form id="form-nodo" novalidate>
+        <header class="modal__cabecera" data-theme="dark">
+          <span class="modal__emblema modal__emblema--acento">
+            <svg class="icono" aria-hidden="true"><use href="#i-nodos" /></svg>
+          </span>
+          <h2 class="modal__titulo" id="modal-nodo-titulo">Nuevo nodo</h2>
+          <button type="button" class="modal__cerrar" data-cierra="modal-nodo" aria-label="Cerrar">
+            <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+          </button>
+        </header>
+
+        <div class="modal__cuerpo">
+          <p class="modal__nota">Los campos marcados con <span class="obligatorio">*</span> son obligatorios.</p>
+          <div class="rejilla-campos">
+            <p class="campo">
+              <label class="campo__etiqueta" for="fn-codigo">Código</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-nodos" /></svg>
+                <input class="campo__control" id="fn-codigo" name="codigo" type="text" placeholder="CCS-07" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fn-nombre">Nombre del nodo</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-equipo" /></svg>
+                <input class="campo__control" id="fn-nombre" name="nombre" type="text" placeholder="Nodo Los Palos Grandes" autocomplete="off" required />
+              </span>
+              <span class="campo__error"></span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fn-tipo">Tipo</label>
+              <select class="campo__control" id="fn-tipo" name="tipo">
+                <option value="Central de fibra">Central de fibra</option>
+                <option value="Nodo de acceso">Nodo de acceso</option>
+                <option value="Radioenlace">Radioenlace</option>
+              </select>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fn-zona">Zona</label>
+              <select class="campo__control" id="fn-zona" name="zona">
+                <option value="Caracas">Caracas</option>
+                <option value="Carabobo">Carabobo</option>
+                <option value="Aragua">Aragua</option>
+                <option value="Zulia">Zulia</option>
+                <option value="Anzoátegui">Anzoátegui</option>
+                <option value="Bolívar">Bolívar</option>
+              </select>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fn-clientes">Clientes conectados</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-clientes" /></svg>
+                <input class="campo__control" id="fn-clientes" name="clientes" type="number" min="0" value="0" inputmode="numeric" />
+              </span>
+            </p>
+
+            <p class="campo">
+              <label class="campo__etiqueta" for="fn-enlaces">Enlaces</label>
+              <span class="campo__caja">
+                <svg class="icono icono--sm campo__icono" aria-hidden="true"><use href="#i-senal" /></svg>
+                <input class="campo__control" id="fn-enlaces" name="enlaces" type="number" min="1" value="1" inputmode="numeric" />
+              </span>
+            </p>
+
+            <fieldset class="campo ancho-total segmentos">
+              <legend class="campo__etiqueta">Estado del nodo</legend>
+              <span class="segmentos__grupo">
+                <label class="segmento"><input type="radio" name="estado" value="activo" checked />Activo</label>
+                <label class="segmento"><input type="radio" name="estado" value="degradado" />Degradado</label>
+                <label class="segmento"><input type="radio" name="estado" value="caido" />Caído</label>
+              </span>
+            </fieldset>
+          </div>
+        </div>
+
+        <footer class="modal__pie">
+          <button type="button" class="btn btn--secundario" data-cierra="modal-nodo">Cancelar</button>
+          <button type="submit" class="btn btn--primario">Crear nodo</button>
+        </footer>
+      </form>
+    </dialog>
 
     <output class="toasts" aria-live="polite"></output>
 

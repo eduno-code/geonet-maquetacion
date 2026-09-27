@@ -1601,7 +1601,7 @@ select.campo__control {
   z-index: -1;
   background: var(--fondo-kpi);
   border-radius: 20px;
-  mask: radial-gradient(circle var(--hueco) at calc(100% - 22px) 22px, transparent calc(var(--hueco) - 0.5px), #000 var(--hueco));
+  mask: radial-gradient(circle var(--hueco) at calc(100% - 22px) 22px, transparent calc(var(--hueco) - 1px), #000 var(--hueco));
 }
 
 .kpi--azul { --tono-kpi: var(--marca-solida); }
@@ -1610,7 +1610,7 @@ select.campo__control {
 
 .kpi[class*='kpi--'] {
   --fondo-kpi:
-    radial-gradient(circle at 85% 130%, color-mix(in srgb, var(--sobre-estado) 14%, transparent) 0 45%, transparent 46%),
+    radial-gradient(circle 128px at 85% 130%, color-mix(in srgb, var(--sobre-estado) 14%, transparent) 0 127px, transparent 128px),
     var(--tono-kpi);
   color: var(--sobre-estado);
 }

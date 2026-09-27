@@ -532,6 +532,55 @@ function pintarEstados() {
   dona.querySelector('.dona__grafico').style.setProperty('--degradado', `${degradado}%`);
 }
 
+/* Altas desde el panel */
+function prepararAltasPanel() {
+  const hoy = new Date().toISOString().slice(0, 10);
+  const altas = [
+    { modal: 'modal-usuario', formulario: 'form-usuario', lista: USUARIOS, unicos: ['usuario', 'correo'], defecto: { estado: 'activo', alta: hoy } },
+    { modal: 'modal-nodo', formulario: 'form-nodo', lista: NODOS, unicos: ['codigo'], defecto: { estado: 'activo', clientes: 0, enlaces: 1 } },
+  ];
+
+  altas.forEach((alta) => {
+    const formulario = document.getElementById(alta.formulario);
+    if (!formulario) return;
+
+    document.querySelector(`[data-abre="${alta.modal}"]`)?.addEventListener('click', () => {
+      formulario.reset();
+      formulario.querySelectorAll('.campo__control').forEach((control) => marcarError(control, ''));
+    });
+
+    formulario.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      if (!validarFormulario(formulario)) {
+        mostrarToast({ tipo: 'error', titulo: 'Error al procesar datos', texto: 'Revisa los campos obligatorios.' });
+        formulario.querySelector('[aria-invalid="true"]')?.focus();
+        return;
+      }
+
+      const datos = Object.fromEntries(new FormData(formulario).entries());
+      formulario.querySelectorAll('input[type="number"]').forEach((control) => {
+        datos[control.name] = Number(control.value);
+      });
+
+      const repetido = alta.unicos.find((campo) =>
+        alta.lista.some((r) => String(r[campo]).toLowerCase() === String(datos[campo]).toLowerCase())
+      );
+      if (repetido) {
+        const control = formulario.elements[repetido];
+        marcarError(control, 'Ya está registrado. Usa otro valor.');
+        control.focus();
+        return;
+      }
+
+      alta.lista.unshift({ id: Date.now(), ...alta.defecto, ...datos });
+      cerrarModal(alta.modal);
+      pintarIndicadores();
+      pintarEstados();
+      mostrarToast({ tipo: 'exito', titulo: '¡Registro exitoso!', texto: `${datos.nombre} se agregó correctamente.` });
+    });
+  });
+}
+
 /* 8. MAPA DE LA RED */
 
 const TRONCAL = [['MAR-01', 'VAL-01'], ['VAL-01', 'MCY-01'], ['MCY-01', 'CCS-01'], ['CCS-01', 'BAR-01'], ['BAR-01', 'CGU-01']];
@@ -976,6 +1025,7 @@ document.addEventListener('DOMContentLoaded', () => {
   pintarIndicadores();
   pintarEstados();
   pintarMapa();
+  prepararAltasPanel();
   pintarZonas();
 
   if (document.body.dataset.vista === 'usuarios') {
