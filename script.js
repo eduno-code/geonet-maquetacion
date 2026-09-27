@@ -67,6 +67,7 @@ const SPRITE = `
   <symbol id="i-salir" viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></symbol>
   <symbol id="i-ir" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-ubicacion" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
   <symbol id="i-manchas" viewBox="0 0 120 72"><path d="M0 34c14-6 22 6 20 16-2 9 8 12 16 8 10-5 20 2 18 10-1 3-2 4-3 4H0Z"/><circle cx="46" cy="40" r="7"/><circle cx="10" cy="22" r="5"/><circle cx="62" cy="54" r="3"/></symbol>
 </svg>`;
 
@@ -629,7 +630,7 @@ function pintarMapa() {
         <td class="tabla__secundario">${n.zona}</td>
         <td><span class="insignia insignia--${n.estado}">${ETIQUETA_ESTADO[n.estado]}</span></td>
         <td class="cifra">${n.clientes.toLocaleString('es-VE')}</td>
-        <td><button type="button" class="enlace-mapa" data-ver-nodo="${n.codigo}">Ver en el mapa</button></td>
+        <td><button type="button" class="enlace-mapa" data-ver-nodo="${n.codigo}" aria-label="Ver ${n.nombre} en el mapa" title="Ver en el mapa">${icono('ubicacion')}</button></td>
       </tr>`
     )
     .join('');

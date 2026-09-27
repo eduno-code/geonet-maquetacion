@@ -158,7 +158,10 @@
             <section class="caja" aria-labelledby="incidencias-titulo">
               <header class="caja__cabecera">
                 <h2 class="caja__titulo" id="incidencias-titulo">Nodos con incidencia</h2>
-                <a class="caja__enlace" href="crud-cards.html?filtro=incidencia">Ver todos</a>
+                <a class="caja__enlace" href="crud-cards.html?filtro=incidencia">
+                  Ver todos
+                  <svg class="icono icono--sm" aria-hidden="true"><use href="#i-flecha" /></svg>
+                </a>
               </header>
               <div class="tabla-envoltorio tabla-envoltorio--plana">
                 <table class="tabla tabla--compacta">
@@ -168,7 +171,7 @@
                       <th scope="col">Zona</th>
                       <th scope="col">Estado</th>
                       <th scope="col">Clientes</th>
-                      <th scope="col"><span class="solo-lectores">Mapa</span></th>
+                      <th scope="col">Mapa</th>
                     </tr>
                   </thead>
                   <tbody data-incidencias></tbody>
