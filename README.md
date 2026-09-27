@@ -47,3 +47,7 @@ Abrir `login.html` en el navegador. No necesita instalación ni servidor.
 Credenciales de prueba: usuario `eduno`, contraseña `geonet2026`.
 
 El mapa del panel necesita conexión a internet.
+
+## Créditos
+
+Fotografía de fibra óptica de las pantallas de acceso: Compagnons, en [Unsplash](https://unsplash.com/photos/lY_JEN49Re4).

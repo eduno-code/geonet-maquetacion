@@ -42,6 +42,7 @@ const ETIQUETA_ESTADO = { activo: 'Activo', degradado: 'Degradado', caido: 'Caí
 const SPRITE = `
 <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
   <symbol id="i-usuario" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.5"/></symbol>
   <symbol id="i-candado" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-correo" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
   <symbol id="i-ojo" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="3"/></symbol>
@@ -63,7 +64,8 @@ const SPRITE = `
   <symbol id="i-equipo" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
   <symbol id="i-clientes" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5.5a3.2 3.2 0 0 1 0 6M17.5 14.4A6.5 6.5 0 0 1 21.5 20"/></symbol>
   <symbol id="i-senal" viewBox="0 0 24 24"><path d="M5 18v-4M10 18v-8M15 18v-12M20 18V8"/></symbol>
-  <symbol id="i-salir" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17 5 12l5-5M5 12h11"/></symbol>
+  <symbol id="i-salir" viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></symbol>
+  <symbol id="i-ir" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
 </svg>`;
 
@@ -281,6 +283,9 @@ function marcarError(control, mensaje) {
 function validarControl(control) {
   const valor = control.value.trim();
   if (control.required && valor === '') return 'Este campo es obligatorio.';
+  if (control.minLength > 0 && valor !== '' && valor.length < control.minLength) {
+    return `Usa al menos ${control.minLength} caracteres.`;
+  }
   if (control.type === 'email' && valor !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(valor)) {
     return 'Escribe un correo con formato válido.';
   }
@@ -348,6 +353,31 @@ function prepararNumeros() {
   });
 }
 
+/* Seguridad de la contraseña */
+function prepararFuerza() {
+  const medidor = document.querySelector('[data-fuerza]');
+  const clave = document.getElementById('clave');
+  if (!medidor || !clave) return;
+  const niveles = [
+    { texto: 'Débil', clase: 'debil' },
+    { texto: 'Aceptable', clase: 'media' },
+    { texto: 'Segura', clase: 'segura' },
+  ];
+
+  clave.addEventListener('input', () => {
+    const valor = clave.value;
+    medidor.hidden = valor === '';
+    let puntos = 0;
+    if (valor.length >= 8) puntos += 1;
+    if (/[a-z]/.test(valor) && /[A-Z]/.test(valor)) puntos += 1;
+    if (/\d/.test(valor)) puntos += 1;
+    if (/[^a-zA-Z\d]/.test(valor)) puntos += 1;
+    const nivel = niveles[valor.length < 8 ? 0 : Math.min(puntos - 1, 2)] || niveles[0];
+    medidor.dataset.nivel = nivel.clase;
+    medidor.querySelector('.fuerza__texto').textContent = `Seguridad: ${nivel.texto}`;
+  });
+}
+
 /* Envío del login y del registro */
 function prepararAcceso() {
   const login = document.getElementById('form-login');
@@ -358,12 +388,20 @@ function prepararAcceso() {
 
     const boton = login.querySelector('button[type="submit"]');
     boton.disabled = true;
-    boton.textContent = 'Entrando…';
+    boton.innerHTML = '<span class="girador" aria-hidden="true"></span>Ingresando…';
     login.setAttribute('aria-busy', 'true');
 
     setTimeout(() => {
       window.location.href = 'dashboard.html';
-    }, 600);
+    }, 700);
+  });
+
+  document.querySelector('[data-recuperar]')?.addEventListener('click', () => {
+    mostrarToast({
+      tipo: 'info',
+      titulo: 'Recupera tu acceso',
+      texto: 'Pide a un administrador de GEONET que restablezca tu contraseña.',
+    });
   });
 
   const registro = document.getElementById('form-registro-cuenta');
@@ -384,15 +422,20 @@ function prepararAcceso() {
       return;
     }
 
+    const boton = registro.querySelector('button[type="submit"]');
+    boton.disabled = true;
+    boton.innerHTML = '<span class="girador" aria-hidden="true"></span>Creando tu cuenta…';
+    registro.setAttribute('aria-busy', 'true');
+
     mostrarToast({
       tipo: 'exito',
       titulo: '¡Registro exitoso!',
-      texto: 'Tu cuenta pública fue creada. Ya puedes iniciar sesión.',
+      texto: 'Tu cuenta está lista. Entrando al panel…',
     });
 
     setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 2200);
+      window.location.href = 'dashboard.html';
+    }, 1400);
   });
 }
 
@@ -414,18 +457,7 @@ function prepararMuestras() {
   });
 }
 
-/* 7. TENDIDO DE FIBRA DEL FONDO */
-
-function prepararTendido() {
-  document.querySelectorAll('.tendido__pulso').forEach((trazo, indice) => {
-    const largo = trazo.getTotalLength();
-    trazo.style.setProperty('--largo', largo);
-    trazo.style.strokeDasharray = `${largo * 0.16} ${largo}`;
-    trazo.style.animationDelay = `${indice * 0.9}s`;
-  });
-}
-
-/* 8. INDICADORES DEL PANEL */
+/* 7. INDICADORES DEL PANEL */
 
 function calcularIndicadores() {
   const conIncidencia = NODOS.filter((n) => n.estado !== 'activo');
@@ -437,7 +469,6 @@ function calcularIndicadores() {
     caidos: NODOS.filter((n) => n.estado === 'caido').length,
     enlaces: NODOS.reduce((suma, n) => suma + n.enlaces, 0),
     conectados: sumarClientes(NODOS.filter((n) => n.estado !== 'caido')),
-    afectados: sumarClientes(conIncidencia),
   };
 }
 
@@ -446,32 +477,62 @@ function pintarIndicadores() {
   if (!zona) return;
   const k = calcularIndicadores();
 
-  const cifraAtajo = document.querySelector('[data-atajo-incidencias]');
-  if (cifraAtajo) cifraAtajo.textContent = k.incidencias;
+  const fecha = document.querySelector('[data-fecha]');
+  if (fecha) {
+    const hoy = new Date().toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' });
+    fecha.textContent = hoy.charAt(0).toUpperCase() + hoy.slice(1);
+  }
 
+
+  const usuariosActivos = USUARIOS.filter((u) => u.estado === 'activo').length;
   const tarjetas = [
-    { rotulo: 'Nodos activos', valor: `${k.activos}/${k.nodos}`, detalle: `${k.enlaces} enlaces en servicio`, icono: 'nodos' },
-    { rotulo: 'Clientes conectados', valor: k.conectados.toLocaleString('es-VE'), detalle: 'Suscriptores con servicio', icono: 'clientes' },
-    { rotulo: 'Incidencias abiertas', valor: String(k.incidencias), detalle: 'Nodos degradados o caídos', icono: 'alerta', alerta: k.incidencias > 0 },
-    { rotulo: 'Clientes afectados', valor: k.afectados.toLocaleString('es-VE'), detalle: 'En nodos con incidencia', icono: 'senal', alerta: k.afectados > 0 },
+    { rotulo: 'Nodos activos', valor: `${k.activos}/${k.nodos}`, chapa: `${((k.activos / k.nodos) * 100).toFixed(1).replace('.', ',')} %`, detalle: `${k.enlaces} enlaces en servicio`, enlace: 'crud-cards.html', tono: 'azul' },
+    { rotulo: 'Clientes conectados', valor: k.conectados.toLocaleString('es-VE'), chapa: '6 zonas', detalle: 'Suscriptores con servicio', enlace: 'crud-cards.html', tono: 'noche' },
+    { rotulo: 'Incidencias abiertas', valor: String(k.incidencias), chapa: `${k.caidos} caído`, detalle: 'Nodos degradados o caídos', enlace: 'crud-cards.html?filtro=incidencia', tono: 'rojo' },
+    { rotulo: 'Usuarios del sistema', valor: String(USUARIOS.length), chapa: `${usuariosActivos} activos`, detalle: `${USUARIOS.length - usuariosActivos} cuentas suspendidas`, enlace: 'crud.html', tono: 'noche' },
   ];
 
   zona.innerHTML = tarjetas
     .map(
       (t) => `
-      <article class="kpi${t.alerta ? ' kpi--alerta' : ''}">
-        <p class="kpi__fila">
-          <span class="kpi__rotulo">${t.rotulo}</span>
-          ${icono(t.icono, 'icono kpi__icono')}
+      <article class="kpi kpi--${t.tono}">
+        <a class="kpi__ir" href="${t.enlace}" aria-label="Ver detalle de ${t.rotulo.toLowerCase()}">${icono('ir', 'icono icono--sm')}</a>
+        <p class="kpi__rotulo">${t.rotulo}</p>
+        <p class="kpi__cifra">
+          <span class="kpi__valor cifra">${t.valor}</span>
+          <span class="kpi__chapa">${t.chapa}</span>
         </p>
-        <p class="kpi__valor cifra">${t.valor}</p>
         <p class="kpi__detalle">${t.detalle}</p>
       </article>`
     )
     .join('');
 }
 
-/* 9. MAPA DE LA RED */
+function pintarEstados() {
+  const dona = document.querySelector('[data-dona]');
+  if (!dona) return;
+  const cuenta = { activo: 0, degradado: 0, caido: 0 };
+  NODOS.forEach((n) => { cuenta[n.estado] += 1; });
+  const total = NODOS.length;
+  const activo = (cuenta.activo / total) * 100;
+  const degradado = activo + (cuenta.degradado / total) * 100;
+
+  dona.innerHTML = `
+    <p class="dona__grafico" role="img" aria-label="${cuenta.activo} activos, ${cuenta.degradado} degradados y ${cuenta.caido} caído de ${total} nodos">
+      <span class="dona__centro"><span class="dona__total cifra">${total}</span> nodos</span>
+    </p>
+    <dl class="dona__leyenda">
+      ${['activo', 'degradado', 'caido'].map((e) => `
+        <div class="dona__dato">
+          <dt><span class="red__muestra red__muestra--${e}"></span>${ETIQUETA_ESTADO[e]}</dt>
+          <dd class="cifra">${cuenta[e]}</dd>
+        </div>`).join('')}
+    </dl>`;
+  dona.querySelector('.dona__grafico').style.setProperty('--activo', `${activo}%`);
+  dona.querySelector('.dona__grafico').style.setProperty('--degradado', `${degradado}%`);
+}
+
+/* 8. MAPA DE LA RED */
 
 const TRONCAL = [['MAR-01', 'VAL-01'], ['VAL-01', 'MCY-01'], ['MCY-01', 'CCS-01'], ['CCS-01', 'BAR-01'], ['BAR-01', 'CGU-01']];
 
@@ -491,22 +552,22 @@ function pintarMapa() {
   const lienzo = document.querySelector('[data-mapa]');
   if (!lienzo) return;
 
-  const riel = document.querySelector('[data-riel]');
-  const orden = { caido: 0, degradado: 1, activo: 2 };
-  const nodos = [...NODOS].sort((a, b) => orden[a.estado] - orden[b.estado]);
-
-  riel.innerHTML = nodos
+  const tabla = document.querySelector('[data-incidencias]');
+  const orden = { caido: 0, degradado: 1 };
+  tabla.innerHTML = NODOS.filter((n) => n.estado !== 'activo')
+    .sort((a, b) => orden[a.estado] - orden[b.estado])
     .map(
       (n) => `
-      <li>
-        <button type="button" class="riel__nodo" data-codigo="${n.codigo}">
-          <span class="red__muestra red__muestra--${n.estado}"></span>
-          <span>
-            <span class="riel__nombre"><span class="cifra">${n.codigo}</span> · ${n.nombre}</span>
-            <span class="riel__detalle">${n.zona} · ${ETIQUETA_ESTADO[n.estado]}</span>
-          </span>
-        </button>
-      </li>`
+      <tr>
+        <td>
+          <span class="tabla__principal">${n.nombre}</span>
+          <span class="tabla__secundario cifra">${n.codigo}</span>
+        </td>
+        <td class="tabla__secundario">${n.zona}</td>
+        <td><span class="insignia insignia--${n.estado}">${ETIQUETA_ESTADO[n.estado]}</span></td>
+        <td class="cifra">${n.clientes.toLocaleString('es-VE')}</td>
+        <td><button type="button" class="enlace-mapa" data-ver-nodo="${n.codigo}">Ver en el mapa</button></td>
+      </tr>`
     )
     .join('');
 
@@ -560,19 +621,15 @@ function pintarMapa() {
       .bindPopup(
         `<strong class="globo__titulo">${n.codigo} · ${n.nombre}</strong>
          <span class="globo__detalle">${n.tipo} · ${n.zona}</span>
-         <span class="insignia insignia--${n.estado}"><span class="punto"></span>${ETIQUETA_ESTADO[n.estado]}</span>`
+         <span class="insignia insignia--${n.estado}">${ETIQUETA_ESTADO[n.estado]}</span>`
       )
-      .on('click', () => marcar(n.codigo));
+;
   });
 
-  function marcar(codigo) {
-    riel.querySelectorAll('.riel__nodo').forEach((b) => b.setAttribute('aria-current', String(b.dataset.codigo === codigo)));
-  }
-
-  riel.querySelectorAll('.riel__nodo').forEach((boton) => {
+  tabla.querySelectorAll('[data-ver-nodo]').forEach((boton) => {
     boton.addEventListener('click', () => {
-      const n = porCodigo[boton.dataset.codigo];
-      marcar(n.codigo);
+      const n = porCodigo[boton.dataset.verNodo];
+      lienzo.scrollIntoView({ behavior: sinMovimiento ? 'auto' : 'smooth', block: 'center' });
       mapa.flyTo([n.lat, n.lon], 14, { duration: sinMovimiento ? 0 : 0.8 });
       mapa.once('moveend', () => marcadores[n.codigo].openPopup());
     });
@@ -609,7 +666,7 @@ function pintarZonas() {
   });
 }
 
-/* 10. MÓDULO CRUD */
+/* 9. MÓDULO CRUD */
 
 function iniciarCrud(config) {
   const lista = document.querySelector('[data-lista]');
@@ -838,8 +895,7 @@ function filaUsuario(u) {
       <td><span class="insignia insignia--rol-${u.rol}">${ETIQUETA_ROL[u.rol]}</span></td>
       <td class="tabla__secundario">${u.zona}</td>
       <td>
-        <span class="insignia insignia--${u.estado}">
-          <span class="punto"></span>${ETIQUETA_ESTADO[u.estado]}
+        <span class="insignia insignia--${u.estado}">${ETIQUETA_ESTADO[u.estado]}
         </span>
       </td>
       <td class="tabla__secundario cifra"><time datetime="${u.alta}">${formatearFecha(u.alta)}</time></td>
@@ -883,30 +939,30 @@ function laminaNodo(tipo, estado) {
 
 function tarjetaNodo(n) {
   return `
-    <article class="tarjeta">
+    <article class="tarjeta tarjeta--${n.estado}">
       <p class="tarjeta__lamina">
         ${laminaNodo(n.tipo, n.estado)}
-        <span class="insignia insignia--${n.estado} tarjeta__insignia">
-          <span class="punto"></span>${ETIQUETA_ESTADO[n.estado]}
-        </span>
+        <span class="tarjeta__codigo cifra">${n.codigo}</span>
+        <span class="insignia insignia--${n.estado} tarjeta__insignia">${ETIQUETA_ESTADO[n.estado]}</span>
       </p>
       <div class="tarjeta__cuerpo">
-        <p class="tarjeta__codigo cifra">${n.codigo}</p>
         <h3 class="tarjeta__titulo">${n.nombre}</h3>
-        <p class="tarjeta__secundario tabla__secundario">${n.tipo} · ${n.zona}</p>
-        <p class="tarjeta__datos">
-          <span class="tarjeta__dato">${icono('clientes', 'icono icono--sm')}<span class="cifra">${n.clientes.toLocaleString('es-VE')}</span> clientes</span>
-          <span class="tarjeta__dato">${icono('senal', 'icono icono--sm')}<span class="cifra">${n.enlaces}</span> enlaces</span>
-          <span class="tabla__acciones tarjeta__acciones">
-          <button type="button" class="btn-icono" data-editar="${n.id}" aria-label="Editar ${n.nombre}" title="Editar">${icono('editar', 'icono icono--sm')}</button>
-          <button type="button" class="btn-icono btn-icono--peligro" data-eliminar="${n.id}" aria-label="Eliminar ${n.nombre}" title="Eliminar">${icono('eliminar', 'icono icono--sm')}</button>
+        <p class="tarjeta__secundario">${n.tipo} · ${n.zona}</p>
+        <div class="tarjeta__pie">
+          <dl class="tarjeta__metricas">
+            <div><dt>Clientes</dt><dd class="cifra">${n.clientes.toLocaleString('es-VE')}</dd></div>
+            <div><dt>Enlaces</dt><dd class="cifra">${n.enlaces}</dd></div>
+          </dl>
+          <span class="tabla__acciones">
+            <button type="button" class="btn-icono" data-editar="${n.id}" aria-label="Editar ${n.nombre}" title="Editar">${icono('editar', 'icono icono--sm')}</button>
+            <button type="button" class="btn-icono btn-icono--peligro" data-eliminar="${n.id}" aria-label="Eliminar ${n.nombre}" title="Eliminar">${icono('eliminar', 'icono icono--sm')}</button>
           </span>
-        </p>
+        </div>
       </div>
     </article>`;
 }
 
-/* 11. ARRANQUE */
+/* 10. ARRANQUE */
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.insertAdjacentHTML('afterbegin', SPRITE);
@@ -914,10 +970,11 @@ document.addEventListener('DOMContentLoaded', () => {
   prepararLateral();
   prepararValidacion();
   prepararNumeros();
+  prepararFuerza();
   prepararAcceso();
   prepararMuestras();
-  prepararTendido();
   pintarIndicadores();
+  pintarEstados();
   pintarMapa();
   pintarZonas();
 

@@ -56,6 +56,11 @@
 
 
         </nav>
+
+        <footer class="lateral__pie">
+          <p class="lateral__version">GEONET v1.0</p>
+          <p class="lateral__credito">© 2026</p>
+        </footer>
       </aside>
 
       <span class="velo" data-visible="false"></span>
@@ -68,17 +73,36 @@
 
           <h1 class="superior__titulo">Nodos de red</h1>
 
-          <p class="usuario">
+          <button type="button" class="usuario" popovertarget="perfil" aria-label="Ver perfil de Edgar Duno">
             <span class="usuario__avatar">ED</span>
-            <span>
-              <span class="usuario__nombre">Edgar Duno</span>
-              <span class="usuario__rol">Administrador · Nacional</span>
-            </span>
-          </p>
+          </button>
 
-          <a class="btn-icono" href="login.html" aria-label="Cerrar sesión">
-            <svg class="icono icono--sm" aria-hidden="true"><use href="#i-salir" /></svg>
-          </a>
+          <section class="perfil" id="perfil" popover aria-label="Perfil de usuario">
+            <header class="perfil__cabecera">
+              <p class="perfil__correo">eduno@geonet.ve</p>
+              <button type="button" class="perfil__cerrar" popovertarget="perfil" popovertargetaction="hide" aria-label="Cerrar perfil">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-cerrar" /></svg>
+              </button>
+            </header>
+            <span class="usuario__avatar perfil__avatar">ED</span>
+            <p class="perfil__saludo">¡Hola, Edgar!</p>
+            <div class="perfil__panel">
+              <dl class="perfil__detalles">
+                <div>
+                  <dt>Rol</dt>
+                  <dd>Administrador</dd>
+                </div>
+                <div>
+                  <dt>Zona</dt>
+                  <dd>Nacional</dd>
+                </div>
+              </dl>
+              <a class="perfil__salir" href="login.html">
+                <svg class="icono icono--sm" aria-hidden="true"><use href="#i-salir" /></svg>
+                Cerrar sesión
+              </a>
+            </div>
+          </section>
         </header>
 
         <main class="contenido" id="contenido">
